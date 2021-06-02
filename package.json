@@ -1,7 +1,7 @@
 {
-  "name": "project-name",
+  "name": "devfinances",
   "version": "1.0.0",
-  "description": "project-description",
+  "description": "Um sistema financeiro simples",
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack serve --mode development"
