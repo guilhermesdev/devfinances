@@ -5,7 +5,7 @@
   box-sizing: border-box;
 }
 
-:root{
+html{
   font-size: 15px;
 
   /* --font-main: 'Poppins', sans-serif;
@@ -33,6 +33,10 @@
 
 /* ELEMENTS */
 
+img{
+  -webkit-user-drag: none;
+}
+
 h2{
   color: var(--color-text);
   font-weight: 400;
@@ -41,6 +45,12 @@ h2{
 body{
   background: var(--color-bg);
   font-family: var(--font-main);
+
+  footer{
+    padding: 4rem 0 2rem;
+    color: var(--color-text);
+    opacity: .6;
+  }
 }
 
 header{
@@ -52,10 +62,10 @@ header{
 a{
   color: var(--color-primary);
   text-decoration: none;
-}
-
-a:hover{
-  color: var(--color-primary-light);
+  
+  &:hover{
+    color: var(--color-primary-light);
+  }
 }
 
 button{
@@ -66,10 +76,10 @@ button{
   background: var(--color-primary);
   border-radius: 5px;
   cursor: pointer;
-}
 
-button:hover{
-  background: var(--color-primary-light);
+  &:hover{
+    background: var(--color-primary-light);
+  }
 }
 
 .card{
@@ -77,46 +87,48 @@ button:hover{
   padding: 1.5rem 2rem;
   border-radius: 5px;
   margin-bottom: 2rem;
+
+    h3{
+      font-size: 1rem;
+      font-weight: 400;
+      text-align: left;
+      
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      color: var(--color-text);
+    }
+    
+    > span{
+      color: var(--color-text);
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 3rem;
+      margin-top: 1rem;
+    }
 }
 
-.card h3{
-  font-size: 1rem;
-  font-weight: 400;
-  text-align: left;
+.button{
 
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  color: var(--color-text);
-}
+  &.new{
+    display: inline-block;
+    margin-bottom: .8rem;
+  }
+  
+  &.cancel{
+    color: var(--color-expense);
+    border: 2px var(--color-expense) solid;
+    border-radius: 5px;
+    height: 3.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: .6;
 
-.card > span{
-  color: var(--color-text);
-  font-size: 2rem;
-  font-weight: 400;
-  line-height: 3rem;
-  margin-top: 1rem;
-}
-
-
-.button.new{
-  display: inline-block;
-  margin-bottom: .8rem;
-}
-
-.button.cancel{
-  color: var(--color-expense);
-  border: 2px var(--color-expense) solid;
-  border-radius: 5px;
-  height: 3.3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: .6;
-}
-
-.button.cancel:hover{
-  opacity: 1;
+    &:hover{
+      opacity: 1;
+    }
+  }
 }
 
 #balance{
@@ -133,61 +145,56 @@ button:hover{
   font-size: 16px;
 }
 
-table thead tr th:first-child,
-table tbody tr td:first-child{
-  border-radius: 5px 0 0 5px;
-}
+table{
+  thead tr th, tbody tr td{
+    &:first-child{
+      border-radius: 5px 0 0 5px;
+    }
+    &:last-child{
+      border-radius: 0 5px 5px 0;
+    }
+  }
 
-table thead tr th:last-child,
-table tbody tr td:last-child{
-  border-radius: 0 5px 5px 0;
-}
+  th{
+    font-weight: 400;
+    text-align: left;
+    padding: 1rem 2rem;
+  }
+  
+  tbody th{
+    background: var(--color-bg-secondary);
+  }
+  
+  td{
+    background: var(--color-bg-secondary);
+    text-align: left;
+    padding: 1rem 2rem;
+    
+    &.description{
+      color: var(--color-text);
+    }
+    
+    &.income{
+      color: var(--color-income);
+    }
+    
+    &.expense{
+      color: var(--color-expense);
+    }
+  }
+  
+  tr{
+    opacity: .75;
+    border-radius: 5px;
 
-table tbody th{
-  background: var(--color-bg-secondary);
-}
+    td img{
+      cursor: pointer;
+    }
 
-table th{
-  font-weight: 400;
-  text-align: left;
-  padding: 1rem 2rem;
-}
-
-table td{
-  background: var(--color-bg-secondary);
-  text-align: left;
-  padding: 1rem 2rem;
-}
-
-table tr{
-  opacity: .75;
-  border-radius: 5px;
-}
-
-table tr:hover{
-  opacity: 1;
-}
-
-table tr td img{
-  cursor: pointer;
-}
-
-td.description{
-  color: var(--color-text);
-}
-
-td.income{
-  color: var(--color-income);
-}
-
-td.expense{
-  color: var(--color-expense);
-}
-
-body footer{
-  padding: 4rem 0 2rem;
-  color: var(--color-text);
-  opacity: .6;
+    &:hover{
+      opacity: 1;
+    }
+  }
 }
 
 .modal-overlay{
@@ -203,11 +210,11 @@ body footer{
   opacity: 0;
   visibility: hidden;
   z-index: 999;
-}
-
-.modal-overlay.active{
-  opacity: 1;
-  visibility: visible;
+  
+  &.active{
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 .modal{
@@ -222,10 +229,10 @@ body footer{
 
 #form{
   max-width: 500px;
-}
-
-#form h2{
-  margin-top: 0;
+  
+  h2{
+    margin-top: 0;
+  }
 }
 
 input{
@@ -238,38 +245,37 @@ input{
   color: var(--color-text);
   outline: none;
   transition: .1s ease-in-out;
-}
-
-input:focus{
-  border: var(--color-primary) 1px solid;
+  
+  &:focus{
+    border: var(--color-primary) 1px solid;
+  }
 }
 
 .input-group{
   margin-top: .8rem;
-}
+  
+  &.actions{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-.input-group small{
-  display: block;
-  opacity: .4;
-  color: #fff;
-  margin: .6rem 0;
-}
+  .button, button{
+    width: 40%;
+  }
 
-.input-group.actions{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.input-group.actions .button,
-.input-group.actions button{
-  width: 40%;
+  small{
+    display: block;
+    opacity: .4;
+    color: #fff;
+    margin: .6rem 0;
+  }
 }
 
 /* UTILS */
 
 .container{
-  width: min(90vw, 1120px);
+  width: #{"min(90vw, 1120px)"};
 }
 
 .text-center{
@@ -315,6 +321,7 @@ color: #fff;
 .hidden{
   display: none;
 }
+
 @media (min-width: 600px){
   #data-table{
     display: table;
@@ -322,7 +329,7 @@ color: #fff;
 }
 
 @media (min-width: 800px){
-  :root{
+  html{
     font-size: 14px;
   }
 

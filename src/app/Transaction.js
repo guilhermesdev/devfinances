@@ -4,7 +4,7 @@ import Utils from './Utils.js';
 
 const Transaction = {
   add(transaction){
-    transactions.push(transaction);
+    transactions.unshift(transaction);
     App.reload();
   },
   remove(index){

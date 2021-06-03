@@ -16,16 +16,17 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
-      },
-      {
-        test: /\.css$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
-          MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2
+            }
+          },
+          'postcss-loader',
+          'sass-loader'
         ]
       },
       {
@@ -33,9 +34,15 @@ module.exports = {
         loader: 'file-loader',
         options: {
           outputPath: 'assets',
-          publicPath: 'assets',
-          name: '[name].[ext]',
-        },
+          name: '[name].[ext]'
+        }
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
       }
     ]
   },

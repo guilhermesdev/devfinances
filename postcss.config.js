@@ -4,7 +4,7 @@ const cssnano = require('cssnano');
 module.exports = {
   plugins: [
     purgecss({
-      content: ['./**/*.html']
+      content: ['./**/*.html', '**/*.js']
     }),
 		require('autoprefixer'),
 		cssnano({

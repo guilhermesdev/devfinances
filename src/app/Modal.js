@@ -4,7 +4,8 @@ const cancelButton = document.querySelector('.button.cancel');
 const formSubmit = document.querySelector('[data-form="submit-transaction"]');
 
 const Modal = {
-  open(){
+  open(event){
+    event.preventDefault();
     modalOverlay.classList.add('active');
     modal.classList.remove('hidden');
   },
