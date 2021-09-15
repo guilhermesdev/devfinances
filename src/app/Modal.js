@@ -1,7 +1,6 @@
 const modalOverlay = document.querySelector('.modal-overlay');
 const modal = document.querySelector('.modal');
 const cancelButton = document.querySelector('.button.cancel');
-const formSubmit = document.querySelector('[data-form="submit-transaction"]');
 
 const Modal = {
   open(event){

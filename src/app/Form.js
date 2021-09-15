@@ -2,6 +2,10 @@ import Utils from './Utils.js';
 import Transaction from './Transaction.js';
 import Modal from './Modal.js';
 
+const description = document.querySelector('#description');
+const amount = document.querySelector('#amount');
+const date = document.querySelector('#date');
+
 const Form = {
   clearFields(){
     description.value = '';
@@ -38,12 +42,16 @@ const Form = {
   },
   submit(event){
     event.preventDefault();
-    
-    Form.validateFields();
-    const transaction = Form.formatData();
-    Transaction.add(transaction);
-    Form.clearFields();
-    Modal.close({ enforce: true });
+
+    try {
+      Form.validateFields();
+      const transaction = Form.formatData();
+      Transaction.add(transaction);
+      Form.clearFields();
+      Modal.close({ enforce: true });
+    } catch({ message }) {
+      alert(message);
+    }
   }
 }
 
