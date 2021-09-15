@@ -28,24 +28,22 @@ const Form = {
     }
   },
   validateFields(){
-    if( description.value.trim() === "" ||
-        amount.value.trim() === "" ||
-        date.value.trim() === "" ){
+    if(
+      !description.value.trim() ||
+      !amount.value.trim() ||
+      !date.value.trim()
+    ){
       throw new Error('Por favor, preencha todos os campos'); 
     }
   },
   submit(event){
     event.preventDefault();
     
-    try{
-      Form.validateFields();
-      const transaction = Form.formatData();
-      Transaction.add(transaction);
-      Form.clearFields();
-      Modal.close(this);
-    }catch (error){
-      alert(error.message);
-    }
+    Form.validateFields();
+    const transaction = Form.formatData();
+    Transaction.add(transaction);
+    Form.clearFields();
+    Modal.close({ enforce: true });
   }
 }
 

@@ -9,10 +9,10 @@ const Modal = {
     modalOverlay.classList.add('active');
     modal.classList.remove('hidden');
   },
-  close(target){
+  close({ target, enforce }){
     if (target !== modalOverlay &&
         target !== cancelButton &&
-        target !== formSubmit ) return;
+        !enforce ) return;
 
     modalOverlay.classList.remove('active');
     modal.classList.add('hidden');   
