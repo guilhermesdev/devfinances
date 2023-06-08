@@ -45,11 +45,13 @@ h2 {
 body {
 	background: var(--color-bg);
 	font-family: var(--font-main);
+	min-height: 100vh;
 
-	footer {
+	> footer {
 		padding: 4rem 0 2rem;
 		color: var(--color-text);
 		opacity: 0.6;
+		text-align: center;
 	}
 }
 
@@ -211,7 +213,9 @@ table {
 	visibility: hidden;
 	z-index: 999;
 
-	&.active {
+	transition: 150ms ease-out;
+
+	&[aria-hidden='false'] {
 		opacity: 1;
 		visibility: visible;
 	}
@@ -277,10 +281,6 @@ input {
 
 .container {
 	width: #{'min(90vw, 1120px)'};
-}
-
-.text-center {
-	text-align: center;
 }
 
 .m-auto {

@@ -16,13 +16,13 @@ export const NewTransactionModal = {
 	open(event: Event): void {
 		event.preventDefault();
 
-		$modalOverlay.classList.add('active');
+		$modalOverlay.setAttribute('aria-hidden', 'false');
 		$newTransactionModal.classList.remove('hidden');
 	},
 	close({ target, force }: CloseModalParam = {}): void {
 		if (target !== $modalOverlay && target !== $cancelButton && !force) return;
 
-		$modalOverlay.classList.remove('active');
+		$modalOverlay.setAttribute('aria-hidden', 'true');
 		$newTransactionModal.classList.add('hidden');
 	}
 };
