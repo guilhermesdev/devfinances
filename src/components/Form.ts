@@ -3,21 +3,21 @@ import { TransactionsStore } from '@/stores/transactions';
 import { formatAmount, formatDate, generateRandomId } from '@/helpers';
 import { NewTransactionModal } from '@/components/NewTransactionModal';
 
-const description = document.querySelector('#description') as HTMLInputElement;
-const amount = document.querySelector('#amount') as HTMLInputElement;
-const date = document.querySelector('#date') as HTMLInputElement;
+const $description = document.querySelector('#description') as HTMLInputElement;
+const $amount = document.querySelector('#amount') as HTMLInputElement;
+const $date = document.querySelector('#date') as HTMLInputElement;
 
 const Form = {
 	clearFields() {
-		description.value = '';
-		amount.value = '';
-		date.value = '';
+		$description.value = '';
+		$amount.value = '';
+		$date.value = '';
 	},
 	getTransactionObject() {
 		return {
-			description: description.value,
-			amount: amount.value,
-			date: date.value
+			description: $description.value,
+			amount: $amount.value,
+			date: $date.value
 		};
 	},
 	formatData() {
@@ -34,7 +34,9 @@ const Form = {
 		};
 	},
 	validateFields() {
-		return description.value.trim() && amount.value.trim() && date.value.trim();
+		return (
+			$description.value.trim() && $amount.value.trim() && $date.value.trim()
+		);
 	},
 	submit(event: Event) {
 		event.preventDefault();

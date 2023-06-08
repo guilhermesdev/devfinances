@@ -1,6 +1,6 @@
 const $modalOverlay = document.querySelector('.modal-overlay')!;
-const modal = document.querySelector('.modal')!;
-const cancelButton = document.querySelector('.button.cancel')!;
+const $newTransactionModal = document.querySelector('.modal')!;
+const $cancelButton = document.querySelector('.button.cancel')!;
 
 type CloseModalParam = {
 	target?: EventTarget | null;
@@ -15,13 +15,14 @@ export const NewTransactionModal = {
 	},
 	open(event: Event): void {
 		event.preventDefault();
+
 		$modalOverlay.classList.add('active');
-		modal.classList.remove('hidden');
+		$newTransactionModal.classList.remove('hidden');
 	},
 	close({ target, force }: CloseModalParam = {}): void {
-		if (target !== $modalOverlay && target !== cancelButton && !force) return;
+		if (target !== $modalOverlay && target !== $cancelButton && !force) return;
 
 		$modalOverlay.classList.remove('active');
-		modal.classList.add('hidden');
+		$newTransactionModal.classList.add('hidden');
 	}
 };
