@@ -1,4 +1,4 @@
-import Transaction from './Transaction.js';
+import Transaction from './Transaction';
 
 const incomes = document.querySelector('.card[data-type="incomes"] > span');
 const expenses = document.querySelector('.card[data-type="expenses"] > span');

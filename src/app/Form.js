@@ -1,6 +1,6 @@
-import Utils from './Utils.js';
-import Transaction from './Transaction.js';
-import Modal from './Modal.js';
+import Utils from './Utils';
+import Transaction from './Transaction';
+import Modal from './Modal';
 
 const description = document.querySelector('#description');
 const amount = document.querySelector('#amount');
