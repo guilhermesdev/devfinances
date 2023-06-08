@@ -15,7 +15,7 @@ Este projeto foi desenvolvido durante a **[Primeira Maratona Discover](https://a
 Este projeto tem algumas diferenças em relação à aplicação desenvolvida originalmente durante a maratona, sendo as principais delas:
 
 - Separação dos arquivos JavaScript em módulos;
-- Utilização do Vite para um desenvolvimento mais rápido e uma melhor experiência de desenvolvimento;
+- Utilização do Vite para uma melhor experiência de desenvolvimento;
 - Utilização de Sass para uma melhor experiência de desenvolvimento com CSS;
 - Dark mode por padrão;
 
