@@ -1,12 +1,12 @@
-import transactions from './data';
-import Transaction from './Transaction';
-import Utils from './Utils';
+import type { Transaction } from '@/core/entities/transation';
+import { TransactionsStore } from '@/stores/transactions';
+import { formatCurrency } from '@/helpers';
 
-const dataTable = document.querySelector('#data-table');
+const dataTable = document.querySelector('#data-table') as HTMLTableElement;
 
 const TransactionsTable = {
 	tbody: dataTable.tBodies[0],
-	createRow(transaction, index) {
+	createRow(transaction: Transaction) {
 		const row = document.createElement('tr');
 		const description = document.createElement('td');
 		description.setAttribute('data-column', 'description');
@@ -15,7 +15,7 @@ const TransactionsTable = {
 		const amount = document.createElement('td');
 		amount.setAttribute('data-column', 'amount');
 		amount.classList.add(transaction.amount > 0 ? 'income' : 'expense');
-		amount.innerText = Utils.formatCurrency(transaction.amount);
+		amount.innerText = formatCurrency(transaction.amount);
 
 		const date = document.createElement('td');
 		date.setAttribute('data-column', 'date');
@@ -25,7 +25,9 @@ const TransactionsTable = {
 		const icon = document.createElement('img');
 		icon.setAttribute('src', '/icons/minus.svg');
 		icon.setAttribute('alt', 'Remover transação');
-		icon.addEventListener('click', () => Transaction.remove(index));
+		icon.addEventListener('click', () =>
+			TransactionsStore.removeTransactionById(transaction.id)
+		);
 		removeButton.appendChild(icon);
 
 		row.appendChild(description);
@@ -36,8 +38,8 @@ const TransactionsTable = {
 		return row;
 	},
 	renderRows() {
-		transactions.forEach((transaction, index) => {
-			const row = this.createRow(transaction, index);
+		TransactionsStore.transactions.forEach((transaction) => {
+			const row = this.createRow(transaction);
 			this.tbody.appendChild(row);
 		});
 	},
