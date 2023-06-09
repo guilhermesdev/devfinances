@@ -1,3 +1,4 @@
+import { formatCurrency } from '@/helpers';
 import { TransactionService } from '@/services/transaction';
 
 const $incomes = document.querySelector(
@@ -12,22 +13,25 @@ const $total = document.querySelector(
 	'.card[data-type="total"] > span'
 ) as HTMLElement;
 
-const Balance = {
+export const Balance = {
 	updateIncomes() {
-		$incomes.innerText = TransactionService.getIncomes();
-		this.updateTotal();
+		const incomesInCents = TransactionService.getIncomes();
+
+		$incomes.textContent = formatCurrency(incomesInCents / 100);
 	},
 	updateExpenses() {
-		$expenses.innerText = TransactionService.getExpenses();
-		this.updateTotal();
+		const expensesInCents = TransactionService.getExpenses();
+
+		$expenses.textContent = formatCurrency(expensesInCents / 100);
 	},
 	updateTotal() {
-		$total.innerText = TransactionService.getTotal();
+		const totalInCents = TransactionService.getTotal();
+
+		$total.textContent = formatCurrency(totalInCents / 100);
 	},
-	updateAll() {
+	updateAllBalanceDisplayValues() {
 		this.updateIncomes();
 		this.updateExpenses();
+		this.updateTotal();
 	}
 };
-
-export default Balance;

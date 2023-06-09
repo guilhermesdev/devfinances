@@ -1,6 +1,6 @@
 import type { Transaction } from '@/core/entities/transation';
 import { TransactionsStore } from '@/stores/transactions';
-import { formatAmount, formatDate, generateRandomId } from '@/helpers';
+import { formatAmountAsCents, formatDate, generateRandomId } from '@/helpers';
 import { NewTransactionModal } from '@/components/NewTransactionModal';
 
 const $description = document.querySelector('#description') as HTMLInputElement;
@@ -20,16 +20,16 @@ const Form = {
 			date: $date.value
 		};
 	},
-	formatData() {
+	formatData(): Omit<Transaction, 'id'> {
 		const transactionValue = this.getTransactionObject();
 
-		const amount = formatAmount(+transactionValue.amount);
+		const amountInCents = formatAmountAsCents(+transactionValue.amount);
 
 		const date = formatDate(transactionValue.date);
 
 		return {
 			description: transactionValue.description,
-			amount,
+			amountInCents,
 			date
 		};
 	},
@@ -47,7 +47,7 @@ const Form = {
 			return alert('Por favor, preencha todos os campos');
 		}
 
-		const transaction = Form.formatData() as Omit<Transaction, 'id'>;
+		const transaction = Form.formatData();
 
 		TransactionsStore.addTransaction({
 			...transaction,

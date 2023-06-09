@@ -2,7 +2,7 @@ import '@/assets/css/style.scss';
 
 import { NewTransactionModal } from '@/components/NewTransactionModal';
 import { TransactionsStore } from '@/stores/transactions';
-import Balance from '@/modules/Balance';
+import { Balance } from '@/modules/Balance';
 import Form from '@/components/Form';
 import TransactionsTable from '@/components/TransactionsTable';
 import { Dispatcher } from '@/events';
@@ -18,12 +18,12 @@ window.addEventListener('load', () => {
 	$transactionForm.addEventListener('submit', Form.submit);
 
 	TransactionsStore.init();
-	Balance.updateAll();
+	Balance.updateAllBalanceDisplayValues();
 	TransactionsTable.renderRows();
 });
 
 Dispatcher.on('update-transactions', () => {
-	Balance.updateAll();
+	Balance.updateAllBalanceDisplayValues();
 	TransactionsTable.clearRows();
 	TransactionsTable.renderRows();
 });

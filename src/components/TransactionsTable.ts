@@ -15,8 +15,8 @@ const TransactionsTable = {
 		const $amount = document.createElement('td');
 
 		$amount.setAttribute('data-column', 'amount');
-		$amount.classList.add(transaction.amount > 0 ? 'income' : 'expense');
-		$amount.innerText = formatCurrency(transaction.amount);
+		$amount.classList.add(transaction.amountInCents > 0 ? 'income' : 'expense');
+		$amount.innerText = formatCurrency(transaction.amountInCents / 100);
 
 		const $date = document.createElement('td');
 

@@ -1,6 +1,6 @@
 export type Transaction = {
 	id: string;
-	amount: number;
+	amountInCents: number;
 	description: string;
 	date: string;
 };

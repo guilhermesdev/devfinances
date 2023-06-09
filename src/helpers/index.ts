@@ -7,15 +7,18 @@ export function formatDate(date: string): string {
 	return `${day}/${month}/${year}`;
 }
 
-export function formatAmount(value: number): number {
+export function formatAmountAsCents(value: number): number {
 	return Math.round(value * 100);
 }
 
-export function formatCurrency(valueInCents: number): string {
-	const value = valueInCents / 100;
-
+export function formatCurrency(value: number): string {
+	console.log(value);
 	return value.toLocaleString('pt-br', {
 		style: 'currency',
 		currency: 'BRL'
 	});
+}
+
+export function sum(numbers: number[]): number {
+	return numbers.reduce((sum, number) => sum + number, 0);
 }
