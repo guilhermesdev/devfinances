@@ -1,5 +1,5 @@
 import type { Transaction } from '@/core/entities/transation';
-import { Dispatcher } from '@/events';
+import { Dispatcher } from '@/events/dispatcher';
 
 export const TransactionsStore = {
 	transactions: [] as Transaction[],
@@ -9,7 +9,7 @@ export const TransactionsStore = {
 	addTransaction(newTransaction: Transaction): void {
 		this.transactions = [newTransaction, ...this.transactions];
 
-		Dispatcher.emit('update-transactions');
+		Dispatcher.emit('new-transaction', newTransaction);
 	},
 	removeTransactionById(transactionId: string): void {
 		this.transactions = this.transactions.filter(
@@ -21,6 +21,10 @@ export const TransactionsStore = {
 };
 
 Dispatcher.on('update-transactions', () =>
+	setLocalStorageTransactions(TransactionsStore.transactions)
+);
+
+Dispatcher.on('new-transaction', () =>
 	setLocalStorageTransactions(TransactionsStore.transactions)
 );
 

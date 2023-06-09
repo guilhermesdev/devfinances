@@ -2,12 +2,15 @@ import type { Transaction } from '@/core/entities/transation';
 import { TransactionsStore } from '@/stores/transactions';
 import { formatCurrency } from '@/helpers';
 
+type AddNewRowOptions = { prepend?: boolean };
+
 const $dataTable = document.querySelector('#data-table') as HTMLTableElement;
 
 const TransactionsTable = {
 	$tbody: $dataTable.tBodies[0],
 	createRow(transaction: Transaction): HTMLTableRowElement {
 		const $row = document.createElement('tr');
+
 		const $description = document.createElement('td');
 		$description.setAttribute('data-column', 'description');
 		$description.innerText = transaction.description;
@@ -28,9 +31,10 @@ const TransactionsTable = {
 
 		$icon.setAttribute('src', '/icons/minus.svg');
 		$icon.setAttribute('alt', 'Remover transação');
-		$icon.addEventListener('click', () =>
-			TransactionsStore.removeTransactionById(transaction.id)
-		);
+		$icon.addEventListener('click', () => {
+			TransactionsStore.removeTransactionById(transaction.id);
+			$row.remove();
+		});
 
 		$removeButton.appendChild($icon);
 
@@ -41,14 +45,20 @@ const TransactionsTable = {
 
 		return $row;
 	},
-	renderRows() {
-		TransactionsStore.transactions.forEach((transaction) => {
-			const $row = this.createRow(transaction);
+	addNewRow(
+		transaction: Transaction,
+		{ prepend = false }: AddNewRowOptions = {}
+	): void {
+		const $row = this.createRow(transaction);
+
+		if (prepend) {
+			this.$tbody.prepend($row);
+		} else {
 			this.$tbody.appendChild($row);
-		});
+		}
 	},
-	clearRows() {
-		this.$tbody.innerHTML = '';
+	renderRows(transactions: Transaction[]): void {
+		transactions.forEach((transaction) => this.addNewRow(transaction));
 	}
 };
 
