@@ -18,15 +18,16 @@ window.addEventListener('load', () => {
 	$transactionForm.addEventListener('submit', CreateNewTransactionForm.submit);
 
 	TransactionsStore.init();
-	Balance.updateAllBalanceDisplayValues();
+
+	Balance.updateAllBalanceDisplayValues(TransactionsStore.transactions);
 	TransactionsTable.renderRows(TransactionsStore.transactions);
 });
 
 Dispatcher.on('new-transaction', (transaction) => {
 	TransactionsTable.addNewRow(transaction, { prepend: true });
-	Balance.updateAllBalanceDisplayValues();
+	Balance.updateAllBalanceDisplayValues(TransactionsStore.transactions);
 });
 
 Dispatcher.on('update-transactions', () => {
-	Balance.updateAllBalanceDisplayValues();
+	Balance.updateAllBalanceDisplayValues(TransactionsStore.transactions);
 });

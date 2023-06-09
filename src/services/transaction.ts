@@ -1,23 +1,23 @@
-import { TransactionsStore } from '@/stores/transactions';
+import type { Transaction } from '@/core/entities/transation';
 import { sum } from '@/helpers';
 
 export const TransactionService = {
-	getIncomes(): number {
-		const incomesArray = TransactionsStore.transactions
+	getIncomes(transactions: Transaction[]): number {
+		const incomesArray = transactions
 			.filter((transaction) => transaction.amountInCents > 0)
 			.map((transaction) => transaction.amountInCents);
 
 		return sum(incomesArray);
 	},
-	getExpenses(): number {
-		const expensesArray = TransactionsStore.transactions
+	getExpenses(transactions: Transaction[]): number {
+		const expensesArray = transactions
 			.filter((transaction) => transaction.amountInCents < 0)
 			.map((transaction) => transaction.amountInCents);
 
 		return sum(expensesArray);
 	},
-	getTotal(): number {
-		const transactionsAmounts = TransactionsStore.transactions.map(
+	getTotal(transactions: Transaction[]): number {
+		const transactionsAmounts = transactions.map(
 			(transaction) => transaction.amountInCents
 		);
 

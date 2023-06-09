@@ -1,17 +1,22 @@
+import { LocalStorageTransactionAdapter } from '@/adapters/LocalStorageTransactionAdapter';
 import type { Transaction } from '@/core/entities/transation';
 import { Dispatcher } from '@/events/dispatcher';
 
 export const TransactionsStore = {
 	transactions: [] as Transaction[],
 	init(): void {
-		this.transactions = getLocalStorageTransactions();
+		this.transactions = LocalStorageTransactionAdapter.getAll();
 	},
 	addTransaction(newTransaction: Transaction): void {
+		LocalStorageTransactionAdapter.addNewTransaction(newTransaction);
+
 		this.transactions = [newTransaction, ...this.transactions];
 
 		Dispatcher.emit('new-transaction', newTransaction);
 	},
 	removeTransactionById(transactionId: string): void {
+		LocalStorageTransactionAdapter.deleteById(transactionId);
+
 		this.transactions = this.transactions.filter(
 			(transaction) => transaction.id !== transactionId
 		);
@@ -19,25 +24,3 @@ export const TransactionsStore = {
 		Dispatcher.emit('update-transactions');
 	}
 };
-
-Dispatcher.on('update-transactions', () =>
-	setLocalStorageTransactions(TransactionsStore.transactions)
-);
-
-Dispatcher.on('new-transaction', () =>
-	setLocalStorageTransactions(TransactionsStore.transactions)
-);
-
-const LOCAL_STORAGE_TRANSACTIONS_KEY = '@devfinances:transactions';
-
-function setLocalStorageTransactions(transactions: Transaction[]) {
-	const transactionsJSON = JSON.stringify(transactions);
-
-	localStorage.setItem(LOCAL_STORAGE_TRANSACTIONS_KEY, transactionsJSON);
-}
-
-function getLocalStorageTransactions(): Transaction[] {
-	const transationsJson = localStorage.getItem(LOCAL_STORAGE_TRANSACTIONS_KEY);
-
-	return transationsJson ? JSON.parse(transationsJson) : [];
-}

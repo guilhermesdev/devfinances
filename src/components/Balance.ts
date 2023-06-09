@@ -1,3 +1,4 @@
+import type { Transaction } from '@/core/entities/transation';
 import { formatCurrency } from '@/helpers';
 import { TransactionService } from '@/services/transaction';
 
@@ -14,24 +15,24 @@ const $total = document.querySelector(
 ) as HTMLElement;
 
 export const Balance = {
-	updateIncomes() {
-		const incomesInCents = TransactionService.getIncomes();
+	updateIncomes(transactions: Transaction[]) {
+		const incomesInCents = TransactionService.getIncomes(transactions);
 
 		$incomes.textContent = formatCurrency(incomesInCents / 100);
 	},
-	updateExpenses() {
-		const expensesInCents = TransactionService.getExpenses();
+	updateExpenses(transactions: Transaction[]) {
+		const expensesInCents = TransactionService.getExpenses(transactions);
 
 		$expenses.textContent = formatCurrency(expensesInCents / 100);
 	},
-	updateTotal() {
-		const totalInCents = TransactionService.getTotal();
+	updateTotal(transactions: Transaction[]) {
+		const totalInCents = TransactionService.getTotal(transactions);
 
 		$total.textContent = formatCurrency(totalInCents / 100);
 	},
-	updateAllBalanceDisplayValues() {
-		this.updateIncomes();
-		this.updateExpenses();
-		this.updateTotal();
+	updateAllBalanceDisplayValues(transactions: Transaction[]) {
+		this.updateIncomes(transactions);
+		this.updateExpenses(transactions);
+		this.updateTotal(transactions);
 	}
 };
