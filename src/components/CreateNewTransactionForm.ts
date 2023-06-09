@@ -7,7 +7,7 @@ const $description = document.querySelector('#description') as HTMLInputElement;
 const $amount = document.querySelector('#amount') as HTMLInputElement;
 const $date = document.querySelector('#date') as HTMLInputElement;
 
-const Form = {
+export const CreateNewTransactionForm = {
 	clearFields() {
 		$description.value = '';
 		$amount.value = '';
@@ -41,22 +41,20 @@ const Form = {
 	submit(event: Event) {
 		event.preventDefault();
 
-		const allFieldsAreValid = Form.validateFields();
+		const allFieldsAreValid = CreateNewTransactionForm.validateFields();
 
 		if (!allFieldsAreValid) {
 			return alert('Por favor, preencha todos os campos');
 		}
 
-		const transaction = Form.formatData();
+		const transaction = CreateNewTransactionForm.formatData();
 
 		TransactionsStore.addTransaction({
 			...transaction,
 			id: generateRandomId()
 		});
 
-		Form.clearFields();
+		CreateNewTransactionForm.clearFields();
 		NewTransactionModal.close({ force: true });
 	}
 };
-
-export default Form;

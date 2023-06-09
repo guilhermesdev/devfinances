@@ -2,9 +2,9 @@ import '@/assets/css/style.scss';
 
 import { NewTransactionModal } from '@/components/NewTransactionModal';
 import { TransactionsStore } from '@/stores/transactions';
-import { Balance } from '@/modules/Balance';
-import Form from '@/components/Form';
-import TransactionsTable from '@/components/TransactionsTable';
+import { Balance } from '@/components/Balance';
+import { CreateNewTransactionForm } from '@/components/CreateNewTransactionForm';
+import { TransactionsTable } from '@/components/TransactionsTable';
 import { Dispatcher } from '@/events/dispatcher';
 
 const $addTransactionButton = document.querySelector('.button.new')!;
@@ -15,7 +15,7 @@ const $transactionForm = document.querySelector(
 window.addEventListener('load', () => {
 	NewTransactionModal.init();
 	$addTransactionButton.addEventListener('click', NewTransactionModal.open);
-	$transactionForm.addEventListener('submit', Form.submit);
+	$transactionForm.addEventListener('submit', CreateNewTransactionForm.submit);
 
 	TransactionsStore.init();
 	Balance.updateAllBalanceDisplayValues();

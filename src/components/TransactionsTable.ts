@@ -6,7 +6,7 @@ type AddNewRowOptions = { prepend?: boolean };
 
 const $dataTable = document.querySelector('#data-table') as HTMLTableElement;
 
-const TransactionsTable = {
+export const TransactionsTable = {
 	$tbody: $dataTable.tBodies[0],
 	createRow(transaction: Transaction): HTMLTableRowElement {
 		const $row = document.createElement('tr');
@@ -61,5 +61,3 @@ const TransactionsTable = {
 		transactions.forEach((transaction) => this.addNewRow(transaction));
 	}
 };
-
-export default TransactionsTable;
