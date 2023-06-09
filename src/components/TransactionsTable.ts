@@ -13,18 +13,18 @@ const TransactionsTable = {
 
 		const $description = document.createElement('td');
 		$description.setAttribute('data-column', 'description');
-		$description.innerText = transaction.description;
+		$description.textContent = transaction.description;
 
 		const $amount = document.createElement('td');
 
 		$amount.setAttribute('data-column', 'amount');
 		$amount.classList.add(transaction.amountInCents > 0 ? 'income' : 'expense');
-		$amount.innerText = formatCurrency(transaction.amountInCents / 100);
+		$amount.textContent = formatCurrency(transaction.amountInCents / 100);
 
 		const $date = document.createElement('td');
 
 		$date.setAttribute('data-column', 'date');
-		$date.innerText = transaction.date;
+		$date.textContent = transaction.date;
 
 		const $removeButton = document.createElement('td');
 		const $icon = document.createElement('img');
