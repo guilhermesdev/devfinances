@@ -12,7 +12,6 @@ export function formatAmountAsCents(value: number): number {
 }
 
 export function formatCurrency(value: number): string {
-	console.log(value);
 	return value.toLocaleString('pt-br', {
 		style: 'currency',
 		currency: 'BRL'
