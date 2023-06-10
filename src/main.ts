@@ -1,10 +1,11 @@
 import '@/assets/css/style.scss';
 
+import { LocalStorageTransactionProvider } from '@/providers/LocalStorageTransactionProvider';
+import { getTransactionsStore } from '@/stores/transactions';
 import { NewTransactionModal } from '@/components/NewTransactionModal';
-import { TransactionsStore } from '@/stores/transactions';
 import { Balance } from '@/components/Balance';
 import { CreateNewTransactionForm } from '@/components/CreateNewTransactionForm';
-import { TransactionsTable } from '@/components/TransactionsTable';
+import { getTransactionsTableComponent } from '@/components/TransactionsTable';
 import { Dispatcher } from '@/events/dispatcher';
 
 const $addTransactionButton = document.querySelector('.button.new')!;
@@ -12,22 +13,27 @@ const $transactionForm = document.querySelector(
 	'[data-form="submit-transaction"]'
 )!;
 
+const transactionsStore = getTransactionsStore(LocalStorageTransactionProvider);
+const transactionTable = getTransactionsTableComponent(transactionsStore);
+
 window.addEventListener('load', () => {
 	NewTransactionModal.init();
 	$addTransactionButton.addEventListener('click', NewTransactionModal.open);
-	$transactionForm.addEventListener('submit', CreateNewTransactionForm.submit);
+	$transactionForm.addEventListener('submit', (e) =>
+		CreateNewTransactionForm.submit(e, transactionsStore)
+	);
 
-	TransactionsStore.init();
+	transactionsStore.init();
 
-	Balance.updateAllBalanceDisplayValues(TransactionsStore.transactions);
-	TransactionsTable.renderRows(TransactionsStore.transactions);
+	Balance.updateAllBalanceDisplayValues(transactionsStore.transactions);
+	transactionTable.renderRows(transactionsStore.transactions);
 });
 
 Dispatcher.on('new-transaction', (transaction) => {
-	TransactionsTable.addNewRow(transaction, { prepend: true });
-	Balance.updateAllBalanceDisplayValues(TransactionsStore.transactions);
+	transactionTable.addNewRow(transaction, { prepend: true });
+	Balance.updateAllBalanceDisplayValues(transactionsStore.transactions);
 });
 
 Dispatcher.on('update-transactions', () => {
-	Balance.updateAllBalanceDisplayValues(TransactionsStore.transactions);
+	Balance.updateAllBalanceDisplayValues(transactionsStore.transactions);
 });

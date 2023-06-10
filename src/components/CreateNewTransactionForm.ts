@@ -38,7 +38,7 @@ export const CreateNewTransactionForm = {
 			$description.value.trim() && $amount.value.trim() && $date.value.trim()
 		);
 	},
-	submit(event: Event) {
+	submit(event: Event, transactionsStore: TransactionsStore) {
 		event.preventDefault();
 
 		const allFieldsAreValid = CreateNewTransactionForm.validateFields();
@@ -49,7 +49,7 @@ export const CreateNewTransactionForm = {
 
 		const transaction = CreateNewTransactionForm.formatData();
 
-		TransactionsStore.addTransaction({
+		transactionsStore.addTransaction({
 			...transaction,
 			id: generateRandomId()
 		});
