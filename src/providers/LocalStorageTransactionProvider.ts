@@ -1,7 +1,7 @@
 import type { Transaction } from '@/core/entities/transation';
 import type { TransactionRepository } from '@/core/repositories/transaction';
 
-export const LocalStorageTransactionAdapter: TransactionRepository = {
+export const LocalStorageTransactionProvider: TransactionRepository = {
 	getAll() {
 		return getLocalStorageTransactions();
 	},

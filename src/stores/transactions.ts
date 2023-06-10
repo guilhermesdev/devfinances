@@ -1,21 +1,21 @@
-import { LocalStorageTransactionAdapter } from '@/adapters/LocalStorageTransactionAdapter';
+import { LocalStorageTransactionProvider } from '@/providers/LocalStorageTransactionProvider';
 import type { Transaction } from '@/core/entities/transation';
 import { Dispatcher } from '@/events/dispatcher';
 
 export const TransactionsStore = {
 	transactions: [] as Transaction[],
 	init(): void {
-		this.transactions = LocalStorageTransactionAdapter.getAll();
+		this.transactions = LocalStorageTransactionProvider.getAll();
 	},
 	addTransaction(newTransaction: Transaction): void {
-		LocalStorageTransactionAdapter.addNewTransaction(newTransaction);
+		LocalStorageTransactionProvider.addNewTransaction(newTransaction);
 
 		this.transactions = [newTransaction, ...this.transactions];
 
 		Dispatcher.emit('new-transaction', newTransaction);
 	},
 	removeTransactionById(transactionId: string): void {
-		LocalStorageTransactionAdapter.deleteById(transactionId);
+		LocalStorageTransactionProvider.deleteById(transactionId);
 
 		this.transactions = this.transactions.filter(
 			(transaction) => transaction.id !== transactionId
