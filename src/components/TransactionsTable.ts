@@ -1,3 +1,5 @@
+import { animate, stagger } from 'motion';
+
 import type { Transaction } from '@/core/entities/transation';
 import type { TransactionsStore } from '@/stores/transactions';
 import { formatCurrency } from '@/helpers';
@@ -20,6 +22,7 @@ export function getTransactionsTableComponent(
 	return {
 		createRow(transaction: Transaction): HTMLTableRowElement {
 			const $row = document.createElement('tr');
+			$row.setAttribute('data-row', '');
 
 			const $description = document.createElement('td');
 			$description.setAttribute('data-column', 'description');
@@ -45,7 +48,20 @@ export function getTransactionsTableComponent(
 			$icon.setAttribute('alt', 'Remover transação');
 			$icon.addEventListener('click', () => {
 				transactionsStore.removeTransactionById(transaction.id);
-				$row.remove();
+
+				animate(
+					$row,
+					{
+						scale: [1, 0.8],
+						opacity: [1, 0]
+					},
+					{
+						duration: 0.3,
+						easing: 'ease-in-out'
+					}
+				).finished.then(() => {
+					$row.remove();
+				});
 			});
 
 			$removeButton.appendChild($icon);
@@ -65,12 +81,24 @@ export function getTransactionsTableComponent(
 
 			if (prepend) {
 				$tbody.prepend($row);
+
+				animate(
+					$row,
+					{ scale: [0.95, 1], opacity: [0, 1] },
+					{ duration: 0.3, easing: 'ease-in-out' }
+				);
 			} else {
 				$tbody.appendChild($row);
 			}
 		},
 		renderRows(transactions: Transaction[]): void {
 			transactions.forEach((transaction) => this.addNewRow(transaction));
+
+			animate(
+				'[data-row]',
+				{ scale: [0.95, 1.01, 1], opacity: [0, 1] },
+				{ duration: 0.15, delay: stagger(0.1), easing: 'ease-out' }
+			);
 		}
 	};
 }
