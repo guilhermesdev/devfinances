@@ -1,4 +1,4 @@
-import { animate, stagger } from 'motion';
+import { animate, stagger, spring } from 'motion';
 
 import type { Transaction } from '@/core/entities/transation';
 import type { TransactionsStore } from '@/stores/transactions';
@@ -46,22 +46,25 @@ export function getTransactionsTableComponent(
 
 			$icon.setAttribute('src', '/icons/minus.svg');
 			$icon.setAttribute('alt', 'Remover transação');
-			$icon.addEventListener('click', () => {
+			$icon.addEventListener('click', async () => {
 				transactionsStore.removeTransactionById(transaction.id);
 
-				animate(
+				const animation = animate(
 					$row,
 					{
 						scale: [1, 0.8],
-						opacity: [1, 0]
+						opacity: [1, 0],
+						display: 'none'
 					},
 					{
-						duration: 0.3,
-						easing: 'ease-in-out'
+						duration: 0.01,
+						easing: spring()
 					}
-				).finished.then(() => {
-					$row.remove();
-				});
+				);
+
+				await animation.finished;
+
+				$row.remove();
 			});
 
 			$removeButton.appendChild($icon);
@@ -85,7 +88,7 @@ export function getTransactionsTableComponent(
 				animate(
 					$row,
 					{ scale: [0.95, 1], opacity: [0, 1] },
-					{ duration: 0.3, easing: 'ease-in-out' }
+					{ duration: 0.3, easing: spring() }
 				);
 			} else {
 				$tbody.appendChild($row);
@@ -97,7 +100,7 @@ export function getTransactionsTableComponent(
 			animate(
 				'[data-row]',
 				{ scale: [0.95, 1.01, 1], opacity: [0, 1] },
-				{ duration: 0.15, delay: stagger(0.1), easing: 'ease-out' }
+				{ duration: 0.15, delay: stagger(0.1), easing: spring() }
 			);
 		}
 	};
