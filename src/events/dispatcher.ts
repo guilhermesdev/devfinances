@@ -13,6 +13,8 @@ type EventHandlersMap<Events extends Record<EventName, unknown>> = Map<
 export function getEventDispatcher<
 	Events extends Record<EventName, unknown>
 >() {
+	type Event = Events[keyof Events];
+
 	const events: EventHandlersMap<Events> = new Map();
 
 	return {
@@ -23,16 +25,14 @@ export function getEventDispatcher<
 			let eventHandlers = events.get(eventName);
 
 			if (!eventHandlers) {
-				const eventHandlersSet = new Set() as EventHandlerSet<
-					Events[keyof Events]
-				>;
+				const eventHandlersSet: EventHandlerSet<Event> = new Set();
 
 				events.set(eventName, eventHandlersSet);
 
 				eventHandlers = eventHandlersSet;
 			}
 
-			eventHandlers.add(handler as EventHandler<Events[keyof Events]>);
+			eventHandlers.add(handler as EventHandler<Event>);
 		},
 		emit<Key extends keyof Events>(eventName: Key, event?: Events[Key]): void {
 			const handlers: EventHandlerSet<Events[Key]> | undefined =

@@ -13,7 +13,7 @@ export function getTransactionsStore(
 	transactionsProvider: TransactionRepository
 ): TransactionsStore {
 	return {
-		transactions: [] as Transaction[],
+		transactions: [],
 		init(): void {
 			this.transactions = transactionsProvider.getAll();
 		},
